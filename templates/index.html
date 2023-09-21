@@ -1,0 +1,73 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Team Health Check App</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Team Health Check App</h1>
+
+    <!-- Form to submit votes -->
+    <form id="voteForm">
+        <label for="team_name">Team Name:</label>
+        <input type="text" id="team_name" name="team_name" required>
+        <br><br>
+
+        <h2>Vote for Areas:</h2>
+        <!-- Create dropdowns for each area -->
+        {% for area in squad_areas %}
+        <label for="{{ area }}">{{ area }}:</label>
+        <select id="{{ area }}" name="{{ area }}">
+            <option value="Green">Green</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Red">Red</option>
+        </select>
+        <br>
+        {% endfor %}
+        <br>
+
+        <input type="submit" value="Submit Vote">
+    </form>
+
+    <hr>
+
+    <h2>Vote Summary:</h2>
+    <div id="voteSummary">
+        <!-- The vote summary will be displayed here -->
+    </div>
+
+    <script>
+        // JavaScript code to handle form submission and fetch vote summary
+        $(document).ready(function () {
+            // Handle form submission
+            $('#voteForm').submit(function (event) {
+                event.preventDefault();
+                const formData = $(this).serializeArray();
+                const data = {};
+                formData.forEach(function (item) {
+                    data[item.name] = item.value;
+                });
+                $.post('/submit_vote', JSON.stringify(data), function (response) {
+                    alert(response.message);
+                });
+            });
+
+            // Fetch and display vote summary
+            function fetchVoteSummary() {
+                $.get('/vote_summary', function (data) {
+                    const summaryHtml = '<table border="1"><thead><tr><th>Area</th><th>Color</th><th>Trend</th></tr></thead><tbody>';
+                    $.each(data, function (area, info) {
+                        summaryHtml += '<tr><td>' + area + '</td><td>' + info.color + '</td><td>' + info.trend + '</td></tr>';
+                    });
+                    summaryHtml += '</tbody></table>';
+                    $('#voteSummary').html(summaryHtml);
+                });
+            }
+
+            // Fetch vote summary on page load
+            fetchVoteSummary();
+        });
+    </script>
+</body>
+</html>
