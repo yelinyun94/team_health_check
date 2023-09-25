@@ -29,8 +29,8 @@ color_descriptions = {
     '🟢': "The squad is happy with this, and see no major need for improvement right now.",
     '🔴': "This really sucks and needs to be improved.",
     '🟡': "There are some important problems that need addressing, but it’s not a disaster.",
-    '🔼': "There is a trend that the squad can improve",
-    '🔽': "There is a trend that the squad needs improvement"
+    '🔼': "The total amount of Yellow & Blue votes are equal to this Green vote (Mixed Votes)",
+    '🔽': "The total amount of Yellow & Red votes are equal to this Blue vote (Mixed Votes)"
 }
 
 # Create a Streamlit dropdown menu to select a team
