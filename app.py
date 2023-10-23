@@ -6,7 +6,7 @@ from openpyxl.drawing.image import Image
 from io import BytesIO
 
 # Load the Excel file
-file_path = '/workspaces/team_health_check/health_check_3.xlsx'
+file_path = 'health_check_3.xlsx'
 xls = pd.ExcelFile(file_path)
 
 # Create a dictionary to store the color icons
